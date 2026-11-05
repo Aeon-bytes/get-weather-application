@@ -19,10 +19,6 @@ The backend is powered by **Spring Boot**, which acts as a REST API layer. It fi
 |---|---|---|
 | Java | 21 | Core programming language |
 | Spring Boot | 4.0.1 | REST API framework & embedded server |
-| Spring Web MVC | (via Spring Boot) | HTTP request handling & routing |
-| Spring DevTools | (via Spring Boot) | Hot reload during development |
-| json-simple | 1.1.1 | Lightweight JSON parsing |
-| Maven | (via wrapper) | Build tool & dependency management |
 
 ### Frontend
 | Technology | Purpose |
@@ -72,13 +68,6 @@ cd Get-Weather-Application
 ```
 
 **2. Start the Spring Boot server**
-
-Using the Maven Wrapper (recommended):
-```bash
-./mvnw spring-boot:run
-```
-
-Or with Maven directly:
 ```bash
 mvn spring-boot:run
 ```
@@ -126,27 +115,5 @@ The backend exposes the following REST endpoint:
 }
 ```
 
----
-
-### Project Structure
-
-```
-Get-Weather-Application/
-├── src/
-│   └── main/
-│       ├── java/com/GetWeather/
-│       │   ├── GetWeatherApplication.java     # Spring Boot entry point
-│       │   ├── GetWeatherController.java      # REST controller & API logic
-│       │   ├── GetWeatherRequest.java         # Request model (city name)
-│       │   └── GetWeatherResponse.java        # Response model (result string)
-│       └── resources/
-│           ├── application.properties         # App configuration
-│           └── static/
-│               ├── index.html                 # Frontend UI
-│               ├── styles.css                 # Stylesheet
-│               └── app.js                     # Fetch API calls
-├── pom.xml                                    # Maven build configuration
-└── README.md
-```
 
 ---
