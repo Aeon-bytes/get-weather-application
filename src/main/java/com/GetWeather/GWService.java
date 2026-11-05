@@ -1,26 +1,25 @@
 package com.GetWeather;
 
+import com.GetWeather.dto.GWRequest;
+import com.GetWeather.dto.GWResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
-import java.net.*;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
-@RestController
-@RequestMapping("/api/v1/get-weather")
-@CrossOrigin(origins = "http://localhost:3000") // Allow frontend access
-public class GetWeatherController {
-
+@Service
+public class GWService {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
 
-    @PostMapping("/get")
-    public GetWeatherResponse get(@RequestBody GetWeatherRequest request) throws Exception {
+    public GWResponse getWeather(GWRequest request) throws Exception {
         String result;
         try {
             String cityName = request.getCity();
@@ -29,13 +28,13 @@ public class GetWeatherController {
 
             if (locationData == null || !locationData.containsKey("results")) {
                 result = "The results for the city " + cityName + " is not available.";
-                return new GetWeatherResponse(result);
+                return new GWResponse(result);
             }
 
             JSONArray dataResults = (JSONArray) locationData.get("results");
             if (dataResults.isEmpty()) {
                 result = "No location found for: " + cityName;
-                return new GetWeatherResponse(result);
+                return new GWResponse(result);
             }
             JSONObject location = (JSONObject) dataResults.get(0);
 
@@ -47,7 +46,7 @@ public class GetWeatherController {
 
             if (weatherData == null || !weatherData.containsKey("current")) {
                 result = "Could not retrieve weather data.";
-                return new GetWeatherResponse(result);
+                return new GWResponse(result);
             }
 
             JSONObject weather_results = (JSONObject) weatherData.get("current");
@@ -71,15 +70,15 @@ public class GetWeatherController {
 
             sb.append(
                     "The temperature: " + temp + temp_units + "\n" +
-                    "Relative humidity: " + humidity + humidity_unit + "\n" +
-                    "Wind speed: " + wind_speed + wind_speed_unit
+                            "Relative humidity: " + humidity + humidity_unit + "\n" +
+                            "Wind speed: " + wind_speed + wind_speed_unit
             );
 
-            return new GetWeatherResponse(sb.toString());
+            return new GWResponse(sb.toString());
 
         } catch (Exception e) {
             result = e.getMessage();
-            return new GetWeatherResponse(result);
+            return new GWResponse(result);
         }
     }
 
@@ -141,5 +140,4 @@ public class GetWeatherController {
             return null;
         }
     }
-
 }

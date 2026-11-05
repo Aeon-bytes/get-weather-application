@@ -1,6 +1,6 @@
-package com.GetWeather;
+package com.GetWeather.dto;
 
-public class GetWeatherRequest {
+public class GWRequest {
     private String city;
 
     public String getCity() {

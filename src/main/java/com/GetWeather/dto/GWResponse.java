@@ -1,9 +1,9 @@
-package com.GetWeather;
+package com.GetWeather.dto;
 
-public class GetWeatherResponse {
+public class GWResponse {
     private String result;
 
-    public GetWeatherResponse(String result) {
+    public GWResponse(String result) {
         this.result = result;
     }
 
